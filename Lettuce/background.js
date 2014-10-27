@@ -3,6 +3,9 @@ function openPopup(url) {
 }
 
 function tweet(text, url, selection) {
+  if (selection == undefined) {
+    selection = "";
+  }
   var tweet_url = "https://twitter.com/intent/tweet?text=" + text + " " + url + " " + selection;
   openPopup(tweet_url);
 }

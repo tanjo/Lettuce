@@ -1,0 +1,11 @@
+## .gitignore ""
+# ignore all
+/*
+*/
+.DS_Store
+
+# allow any
+!README.md
+!Lettuce
+!.gitignore
+!*.crx

@@ -6,7 +6,10 @@ function tweet(text, url, selection) {
   if (selection == undefined) {
     selection = "";
   }
-  var tweet_url = "https://twitter.com/intent/tweet?text=" + text + " " + url + " " + selection;
+  var tweet_url = "https://twitter.com/intent/tweet?text=" + text + " " + url;
+  if (selection != "") {
+    tweet_url += " \"" + selection + "\"";
+  }
   openPopup(tweet_url);
 }
 

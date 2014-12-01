@@ -6,9 +6,9 @@ function tweet(text, url, selection) {
   if (selection == undefined) {
     selection = "";
   }
-  var tweet_url = "https://twitter.com/intent/tweet?text=" + text + " " + url;
+  var tweet_url = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(text) + "%20" + encodeURIComponent(url);
   if (selection != "") {
-    tweet_url += " \"" + selection + "\"";
+    tweet_url += "%20%22" + encodeURIComponent(selection) + "%22";
   }
   openPopup(tweet_url);
 }

@@ -3,11 +3,11 @@ function openPopup(url) {
 }
 
 function tweet(text, url, selection) {
-  if (selection == undefined) {
+  if (selection === undefined) {
     selection = "";
   }
   var tweet_url = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(text) + "%20" + encodeURIComponent(url);
-  if (selection != "") {
+  if (selection !== "") {
     tweet_url += "%20%22" + encodeURIComponent(selection) + "%22";
   }
   openPopup(tweet_url);

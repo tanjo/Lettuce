@@ -4,6 +4,10 @@ Lettuce
 Web Intents | Twitter Developers
 https://dev.twitter.com/web/intents
 
+## X.X.X
+
+スクリプト修正
+
 ## 1.0.2
 
 URL エスケープ処理

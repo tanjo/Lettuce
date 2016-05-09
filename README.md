@@ -4,8 +4,9 @@ Lettuce
 Web Intents | Twitter Developers
 https://dev.twitter.com/web/intents
 
-## X.X.X
+## 1.0.3
 
+ハッシュタグオプション追加
 スクリプト修正
 
 ## 1.0.2

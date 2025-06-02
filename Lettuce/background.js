@@ -1,42 +1,48 @@
-function openPopup(url) {
-  chrome.tabs.create({ url : url });
-}
+class Lettuce {
+  static openPopup(url) {
+    chrome.tabs.create({ url });
+  }
 
-function tweet(text, url, selection, hashtag) {
-  if (selection === undefined) {
-    selection = "";
+  static tweet(text, url, selection = "", hashtag = "") {
+    const tweetUrl = new URL("https://twitter.com/intent/tweet");
+    tweetUrl.searchParams.set("text", `${text} ${url}`);
+    if (selection) {
+      tweetUrl.searchParams.set("text", `${tweetUrl.searchParams.get("text")} "${selection}"`);
+    }
+    if (hashtag) {
+      tweetUrl.searchParams.set("text", `${tweetUrl.searchParams.get("text")} #${hashtag}`);
+    }
+    this.openPopup(tweetUrl.toString());
   }
-  if (hashtag === undefined) {
-    hashtag = "";
-  }
-  var tweet_url = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(text) + "%20" + encodeURIComponent(url);
-  if (selection !== "") {
-    tweet_url += "%20%22" + encodeURIComponent(selection) + "%22";
-  }
-  if (hashtag !== "") {
-    tweet_url += "%20%23" + encodeURIComponent(hashtag);
-  }
-  openPopup(tweet_url);
-}
 
-function getSelection() {
-  return window.getSelection().toString();
-}
-
-chrome.action.onClicked.addListener((activeTab) => {
-  chrome.scripting.executeScript({ 
-    target: { tabId: activeTab.id },
-    func:getSelection 
-  }, (selection) => {
-    chrome.storage.local.get(["Lettuce"], (data) => {
-      var hashtag = "";
-      if (data.Lettuce) {
-        var json = JSON.parse(data.Lettuce);
-        if (json !== null) {
-          hashtag = json["Lettuce.hashtag"];
-        }
-      }
-      tweet(activeTab.title, activeTab.url, selection[0].result, hashtag);
+  static async getSelection(tabId) {
+    const [result] = await chrome.scripting.executeScript({
+      target: { tabId },
+      func: () => window.getSelection().toString(),
     });
-  });
-});
+    return result.result;
+  }
+
+  static async getHashtag() {
+    const storageKey = "Lettuce";
+    const hashtagKey = "Lettuce.hashtag";
+    const data = await chrome.storage.local.get([storageKey]);
+    if (data[storageKey]) {
+      const json = JSON.parse(data[storageKey]);
+      return json?.[hashtagKey] || "";
+    }
+    return "";
+  }
+
+  static async handleActionClick(activeTab) {
+    try {
+      const selection = await this.getSelection(activeTab.id);
+      const hashtag = await this.getHashtag();
+      this.tweet(activeTab.title, activeTab.url, selection, hashtag);
+    } catch (error) {
+      console.error("Error handling action click:", error);
+    }
+  }
+}
+
+chrome.action.onClicked.addListener((activeTab) => Lettuce.handleActionClick(activeTab));

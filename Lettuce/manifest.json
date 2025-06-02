@@ -3,7 +3,7 @@
 
 	"name" : "Lettuce",
 	"description" : "Twitter で URL 共有",
-	"version" : "2025.6.2",
+	"version" : "2025.6.3",
 
 	"permissions" : [
 		"tabs",

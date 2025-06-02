@@ -1,14 +1,67 @@
-<html>
-  <head>
-    <meta charset="utf-8">
-    <script src="options.js"></script>
-  </head>
-  <body style='font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;'>
-    <form id="lettuce_settings">
-      <p style="font-weight: bold;">Twitter HashTag</p>
-      <p># <input type="text" name="hashtag" style="width:200px;"></p>
-      <input type="button" name="ok" value="ＯＫ" style="width:50px;">
-      <input type="button" name="del" value="削除" style="width:50px;">
-    </form>
-  </body>
+<!DOCTYPE html>
+<html lang="ja"></html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lettuce 設定</title>
+  <script src="options.js" defer></script>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      margin: 20px;
+      line-height: 1.6;
+      background-color: #f8f9fa;
+      color: #212529;
+    }
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    p {
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      box-sizing: border-box;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+    .button-group {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+    input[type="button"] {
+      padding: 10px 16px;
+      cursor: pointer;
+      border: 1px solid #ced4da;
+      background-color: #e9ecef;
+      border-radius: 4px;
+      font-size: 1rem;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+    input[type="button"]:hover {
+      background-color: #dee2e6;
+      border-color: #adb5bd;
+    }
+  </style>
+</head>
+<body>
+  <form id="lettuce_settings">
+    <p>Twitter ハッシュタグ</p>
+    <p># <input type="text" name="hashtag" placeholder="ハッシュタグを入力"></p>
+    <div class="button-group">
+      <input type="button" name="ok" value="OK">
+      <input type="button" name="del" value="削除">
+    </div>
+  </form>
+</body>
 </html>

@@ -19,16 +19,24 @@ function tweet(text, url, selection, hashtag) {
   openPopup(tweet_url);
 }
 
-chrome.browserAction.onClicked.addListener(function(activeTab) {
-  chrome.tabs.executeScript({code: "window.getSelection().toString();"}, function(selection) {
-    chrome.tabs.getSelected(null, function(tab) {
+function getSelection() {
+  return window.getSelection().toString();
+}
+
+chrome.action.onClicked.addListener((activeTab) => {
+  chrome.scripting.executeScript({ 
+    target: { tabId: activeTab.id },
+    func:getSelection 
+  }, (selection) => {
+    chrome.storage.local.get(["Lettuce"], (data) => {
       var hashtag = "";
-      var json = localStorage.getItem("Lettuce");
-      if (json !== null) {
-        var jsonObject = JSON.parse(json);
-        hashtag = jsonObject["Lettuce.hashtag"];
+      if (data.Lettuce) {
+        var json = JSON.parse(data.Lettuce);
+        if (json !== null) {
+          hashtag = json["Lettuce.hashtag"];
+        }
       }
-      tweet(tab.title, tab.url, selection[0], hashtag);
+      tweet(activeTab.title, activeTab.url, selection[0].result, hashtag);
     });
   });
 });
